@@ -1,0 +1,15 @@
+-users
+1. email
+2. username
+3. password
+5. profile_img
+4. status
+5. User Id 4 digit for adding friends
+
+-users_pending_table -> if opt code is same, created in user users_pending_table
+1. email
+2. username
+3. password
+5. profile_img
+4. otp_code
+5. User Id 4 digit for adding friends
