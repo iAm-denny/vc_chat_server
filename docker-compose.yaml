@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  # Mysql
+  mysql_db:
+    container_name: db_container
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: "vc_chat"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "Password"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      DB_HOSTNAME: mysql
+    volumes:
+      - mysql_db:/var/lib/mysql
+
+  api:
+    build: .
+    ports:
+      - 4000:4000
+    environment:
+      - JWT_SECRET= "DENNY"
+    depends_on:
+      - mysql_db
+volumes:
+  mysql_db: {}

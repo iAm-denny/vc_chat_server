@@ -7,6 +7,7 @@ const db = require("./models");
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+require("dotenv").config();
 
 const port = process.env.PORT || 4000;
 const app = express();

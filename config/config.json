@@ -1,9 +1,9 @@
+
 {
   "development": {
     "username": "root",
     "password": "Password",
     "database": "vc_chat",
-    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
@@ -21,3 +21,5 @@
     "dialect": "mysql"
   }
 }
+
+
