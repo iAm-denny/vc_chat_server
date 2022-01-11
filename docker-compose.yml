@@ -21,9 +21,10 @@ services:
     ports:
       - 4000:4000
     environment:
-      - EMAIL= "test@gmail.com"
-      - PASSWORD= "test123"
+      - EMAIL= "justinscold@gmail.com"
+      - PASSWORD= "09254253225minlapyae"
       - JWT_SECRET= "DENNY"
+
     depends_on:
       - mysql_db
 volumes:
