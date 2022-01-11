@@ -3,7 +3,6 @@ version: "3.9"
 services:
   # Mysql
   mysql_db:
-    container_name: db_container
     image: mysql:latest
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -21,10 +20,9 @@ services:
     ports:
       - 4000:4000
     environment:
-      - EMAIL= "justinscold@gmail.com"
-      - PASSWORD= "09254253225minlapyae"
-      - JWT_SECRET= "DENNY"
-
+      - EMAIL= "test@gmail.com"
+      - PASSWORD= "test"
+      - JWT_SECRET= "test"
     depends_on:
       - mysql_db
 volumes:
