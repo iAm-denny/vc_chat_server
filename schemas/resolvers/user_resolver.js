@@ -25,6 +25,7 @@ const userResolvers = {
   Query: {
     user: async (parent, args, context) => {
       const user = decodedToken(context.headers.authorization);
+
       if (user) {
         return user;
       } else {
@@ -33,6 +34,7 @@ const userResolvers = {
     },
     getnotis: async (parent, args, context) => {
       const user = decodedToken(context.headers.authorization);
+
       if (user) {
         // let { page, limit } = args.input;
         // page = page ? page : 0;
@@ -47,16 +49,22 @@ const userResolvers = {
         //   replacements: [user.id, offset, limit],
         //   type: sequelize.QueryTypes.SELECT,
         // });
-        const raw_query =
-          "SELECT users.username, users.profile_img, users.id, usersnotis.read, usersnotis.createdAt, usersnotis.receiver_id, usersnotis.user_id FROM usersnotis JOIN users ON  usersnotis.user_id  = users.id  WHERE usersnotis.receiver_id = ?";
 
-        const notis = await sequelize.query(raw_query, {
-          replacements: [user.id],
-          type: sequelize.QueryTypes.SELECT,
-        });
-
-        return notis;
+        try {
+          const raw_query =
+            "SELECT Users.username, Users.profile_img, Users.id, UsersNotis.read, UsersNotis.createdAt, UsersNotis.receiver_id, UsersNotis.user_id FROM UsersNotis JOIN Users ON  UsersNotis.user_id  = Users.id  WHERE UsersNotis.receiver_id = ?";
+          console.log("raw_query --->", raw_query);
+          const notis = await sequelize.query(raw_query, {
+            replacements: [user.id],
+            type: sequelize.QueryTypes.SELECT,
+          });
+          console.log("notis---------", notis);
+          return notis;
+        } catch (err) {
+          console.log("err", err);
+        }
       } else {
+        console.log("good---------");
         return { message: "user need authenticate" };
       }
     },
@@ -65,7 +73,7 @@ const userResolvers = {
 
       if (user) {
         const raw_query =
-          "SELECT users.username, users.profile_img, users.id, users.email, friends.room_id FROM friends JOIN users ON  friends.friend_id  = users.id  WHERE friends.user_id = ?";
+          "SELECT Users.username, Users.profile_img, Users.id, Users.email, Friends.room_id FROM Friends JOIN Users ON  Friends.friend_id  = Users.id  WHERE Friends.user_id = ?";
         const friends = await sequelize.query(raw_query, {
           replacements: [user.id],
           type: sequelize.QueryTypes.SELECT,
@@ -126,7 +134,7 @@ const userResolvers = {
             `;
             transporter.sendMail(mailOptions, (err, data) => {
               if (err) {
-                return console.log("Error occurs");
+                return console.log("Error occurs", err);
               }
               return { message: "success" };
             });
